@@ -1,0 +1,28 @@
+/* ex1.5 */
+
+# données
+
+data;
+
+param nbMois := 12;
+param coutProd := 20;
+param coutProdSup := 30;
+param coutStock := 3;
+
+param stockInit := 2000;
+param capaProd := 30000;
+
+param previ :=
+1 30000
+2 15000
+3 15000
+4 25000
+5 33000
+6 40000
+7 45000
+8 45000
+9 26000
+10 14000
+11 25000
+12 30000;
+
