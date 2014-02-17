@@ -5,15 +5,15 @@
 data;
 
 param nbCasquette := 2;
-param nbAtelier := 2;
+param nbAtelier   := 2;
 
-param profit := 1 12 2 20;
+param profit      := 1 12 2 20;
 
-param tmpsFab :
-   1   2 :=
+param tmpsFab     :
+   1   2          :=
 1 0.2 0.2
 2 0.4 0.6
 ;
 
-param heureDispo := 1 400 2 800;
+param heureDispo  := 1 400 2 800;
 

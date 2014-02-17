@@ -4,15 +4,15 @@
 
 data;
 
-param nbMois := 12;
-param coutProd := 20;
+param nbMois      := 12;
+param coutProd    := 20;
 param coutProdSup := 30;
-param coutStock := 3;
+param coutStock   := 3;
 
-param stockInit := 2000;
-param capaProd := 30000;
+param stockInit   := 2000;
+param capaProd    := 30000;
 
-param previ :=
+param previ       :=
 1 30000
 2 15000
 3 15000
