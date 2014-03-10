@@ -61,8 +61,8 @@ int main(int argc, char const *argv[]) {
 		glp_set_col_kind(porb,i,GLP_BV); // type des variables
 	}
 
-	for (i = 1; i <= NBVILLE; ++i) {
-		glp_set_obj_coef(prob,i,p[i]);
+	for (i = 0; i < NBVILLE; ++i) {
+		glp_set_obj_coef(prob,i+1,p[i]);
 	}
 
 /*****************
@@ -197,6 +197,24 @@ ia[99] = 12 ; ja [99] = 24 ; ar[99] = -1.0 ;
 ia[100] = 13 ; ja [100] = 25 ; ar[100] = -1.0 ;
 ia[101] = 13 ; ja [101] = 21 ; ar[101] = -1.0 ;
 
-return 0;
+/* chargement de la matrice dans le problème */
+	
+glp_load_matrix(prob,NBCONTR,ia,ja,ar);
+	
+/* Optionnel : écriture de la modélisation dans un fichier (utile pour debugger) */
+
+glp_write_lp(prob,NULL,"coca.lp");
+
+/* Résolution, puis lecture des résultats */
+	
+glp_simplex(prob,NULL);	glp_intopt(prob,NULL); /* Résolution */
+z = glp_mip_obj_val(prob);
+
+for(i = 0;i < p.nbvar; i++) x[i] = glp_mip_col_val(prob,i+1); /* Récupération de la valeur des variables */
+
+printf("z = %lf\n",z);
+for(i = 0;i < p.nbvar;i++) printf("x%c = %d, ",'B'+i,(int)(x[i] + 0.5)); /* un cast est ajouté, x[i] pourrait être égal à 0.99999... */ 
+puts("");
+
 }
 
