@@ -216,5 +216,6 @@ printf("z = %lf\n",z);
 for(i = 0;i < p.nbvar;i++) printf("x%c = %d, ",'B'+i,(int)(x[i] + 0.5)); /* un cast est ajouté, x[i] pourrait être égal à 0.99999... */ 
 puts("");
 
+return 0;
 }
 
