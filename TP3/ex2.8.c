@@ -18,9 +18,9 @@ int main(int argc, char const *argv[]) {
 
 	glp_prob *prob;
 
-	int ia[1 + INDICE];
-	int ja[1 + INDICE];
-	double ar[1 + INDICE];
+	int ia[1 + NBCONTR];
+	int ja[1 + NBCONTR];
+	double ar[1 + NBCONTR];
 
 	int i;
 	double z;
@@ -56,6 +56,8 @@ int main(int argc, char const *argv[]) {
 	for (i = 1; i <= NBCONTR; ++i) {
 		glp_set_row_bnds(prob,i,GLP_UP, 0.0, 0.0); //borne contrainte
 	}
+
+	glp_add_cols(prob, NBVAR); // nb variables
 
 	for (i = 1; i <= NBVAR; ++i) {
 		glp_set_col_kind(prob,i,GLP_BV); // type des variables
@@ -189,9 +191,9 @@ ia[93] = 11 ; ja [93] = 21 ; ar[93] = -1.0 ;
 ia[94] = 11 ; ja [94] = 22 ; ar[94] = -1.0 ;
 ia[95] = 11 ; ja [95] = 23 ; ar[95] = -1.0 ;
 
-ia[96] = 12 ; ja [96] = 27 ; ar[96] = -1.0 ;
-ia[97] = 12 ; ja [97] = 26 ; ar[97] = -1.0 ;
-ia[98] = 12 ; ja [98] = 25 ; ar[98] = -1.0 ;
+ia[96] = 12 ; ja [96] = 21 ; ar[96] = -1.0 ;
+ia[97] = 12 ; ja [97] = 22 ; ar[97] = -1.0 ;
+ia[98] = 12 ; ja [98] = 23 ; ar[98] = -1.0 ;
 ia[99] = 12 ; ja [99] = 24 ; ar[99] = -1.0 ;
 
 ia[100] = 13 ; ja [100] = 25 ; ar[100] = -1.0 ;
@@ -201,13 +203,15 @@ ia[101] = 13 ; ja [101] = 21 ; ar[101] = -1.0 ;
 	
 glp_load_matrix(prob,NBCONTR,ia,ja,ar);
 	
-/* Optionnel : écriture de la modélisation dans un fichier (utile pour debugger) */
+/* Ecriture de la modélisation dans un fichier */
 
 glp_write_lp(prob,NULL,"coca.lp");
 
 /* Résolution, puis lecture des résultats */
 	
-glp_simplex(prob,NULL);	glp_intopt(prob,NULL); /* Résolution */
+glp_simplex(prob,NULL);
+glp_intopt(prob,NULL); /* Résolution */
+
 z = glp_mip_obj_val(prob);
 
 for(i = 0;i < NBVAR; i++) x[i] = glp_mip_col_val(prob,i+1); /* Récupération de la valeur des variables */
@@ -215,6 +219,8 @@ for(i = 0;i < NBVAR; i++) x[i] = glp_mip_col_val(prob,i+1); /* Récupération de
 printf("z = %lf\n",z);
 for(i = 0;i < NBVAR;i++) printf("x%c = %d, ",'B'+i,(int)(x[i] + 0.5)); /* un cast est ajouté, x[i] pourrait être égal à 0.99999... */ 
 puts("");
+
+glp_delete_prob(prob);
 
 return 0;
 }
