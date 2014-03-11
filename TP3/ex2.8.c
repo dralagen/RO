@@ -11,7 +11,8 @@
 #define NBVILLE 13
 
 #define NBVAR NBVILLE*2
-#define NBCONTR 101
+#define NBCONTR 102
+#define p 2
 
 int main(int argc, char const *argv[]) {
 
@@ -197,6 +198,8 @@ ia[99]   = 12 ; ja [99]  = 24 ; ar[99]  = -1.0 ;
 
 ia[100]  = 13 ; ja [100] = 25 ; ar[100] = -1.0 ;
 ia[101]  = 13 ; ja [101] = 21 ; ar[101] = -1.0 ;
+
+ia[102]  = 14 ; ja [102] = 14 ; ar[102] = p ;
 
 /* chargement de la matrice dans le problème */
 
