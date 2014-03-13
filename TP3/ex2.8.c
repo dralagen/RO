@@ -9,17 +9,20 @@
 #include <glpk.h>
 
 #define NBVILLE 13
+#define NBUSINE 1
 
 #define NBVAR NBVILLE*2
-#define NBCONTR 101
+#define NBCONTR 14
+
+#define NBCREUX 114
 
 int main(int argc, char const *argv[]) {
 
 	glp_prob *prob;
 
-	int ia[1 + NBCONTR];
-	int ja[1 + NBCONTR];
-	double ar[1 + NBCONTR];
+	int ia[1 + NBCREUX];
+	int ja[1 + NBCREUX];
+	double ar[1 + NBCREUX];
 
 	int i;
 	double z;
@@ -52,9 +55,10 @@ int main(int argc, char const *argv[]) {
 
 	glp_add_rows(prob, NBCONTR); // nb contraintes
 
-	for (i = 1; i <= NBCONTR; ++i) {
+	for (i = 1; i < NBCONTR; ++i) {
 		glp_set_row_bnds(prob,i,GLP_UP, 0.0, 0.0); //borne contrainte
 	}
+	glp_set_row_bnds(prob,NBCONTR,GLP_FX, NBUSINE, NBUSINE);
 
 	glp_add_cols(prob, NBVAR); // nb variables
 
@@ -198,9 +202,23 @@ ia[99]   = 12 ; ja [99]  = 24 ; ar[99]  = -1.0 ;
 ia[100]  = 13 ; ja [100] = 25 ; ar[100] = -1.0 ;
 ia[101]  = 13 ; ja [101] = 21 ; ar[101] = -1.0 ;
 
+ia[102] = 14 ; ja [102] = 14 ; ar[102] = 1.0;
+ia[103] = 14 ; ja [103] = 15 ; ar[103] = 1.0;
+ia[104] = 14 ; ja [104] = 16 ; ar[104] = 1.0;
+ia[105] = 14 ; ja [105] = 17 ; ar[105] = 1.0;
+ia[106] = 14 ; ja [106] = 18 ; ar[106] = 1.0;
+ia[107] = 14 ; ja [107] = 19 ; ar[107] = 1.0;
+ia[108] = 14 ; ja [108] = 20 ; ar[108] = 1.0;
+ia[109] = 14 ; ja [109] = 21 ; ar[109] = 1.0;
+ia[110] = 14 ; ja [110] = 22 ; ar[110] = 1.0;
+ia[111] = 14 ; ja [111] = 23 ; ar[111] = 1.0;
+ia[112] = 14 ; ja [112] = 24 ; ar[112] = 1.0;
+ia[113] = 14 ; ja [113] = 25 ; ar[113] = 1.0;
+ia[114] = 14 ; ja [114] = 26 ; ar[114] = 1.0;
+
 /* chargement de la matrice dans le problème */
 
-glp_load_matrix(prob,NBCONTR,ia,ja,ar);
+glp_load_matrix(prob,NBCREUX,ia,ja,ar);
 
 /* Ecriture de la modélisation dans un fichier */
 
