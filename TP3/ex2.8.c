@@ -9,12 +9,14 @@
 #include <glpk.h>
 
 #define NBVILLE 13
-#define NBUSINE 1
+#define NBUSINE 13
 
-#define NBVAR NBVILLE*2
+#define NBVAR NBVILLE + NBUSINE
 #define NBCONTR 14
 
 #define NBCREUX 114
+
+#define NB_USINE_PAR_VILLE 1
 
 int main(int argc, char const *argv[]) {
 
@@ -58,7 +60,7 @@ int main(int argc, char const *argv[]) {
 	for (i = 1; i < NBCONTR; ++i) {
 		glp_set_row_bnds(prob,i,GLP_UP, 0.0, 0.0); //borne contrainte
 	}
-	glp_set_row_bnds(prob,NBCONTR,GLP_FX, NBUSINE, NBUSINE);
+	glp_set_row_bnds(prob,NBCONTR,GLP_FX, NB_USINE_PAR_VILLE, NB_USINE_PAR_VILLE);
 
 	glp_add_cols(prob, NBVAR); // nb variables
 
